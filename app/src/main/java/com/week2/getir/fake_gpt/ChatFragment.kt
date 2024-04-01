@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import com.week2.getir.fake_gpt.databinding.FragmentChatBinding
 
 class ChatFragment : Fragment() {
 
-    private var _binding: FragmentChatBinding ?= null
-    private val binding get() = _binding!!
+    private lateinit var button: Button
+    private lateinit var etSearch: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,9 +24,11 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentChatBinding.inflate(layoutInflater,container,false)
-        binding.btnSearch.setOnClickListener {
-            val questions = binding.etSearch.text.toString()
+        val view = inflater.inflate(R.layout.fragment_chat,container,false)
+        button = view.findViewById(R.id.btnSearch)
+        etSearch = view.findViewById(R.id.etSearch)
+        button.setOnClickListener {
+            val questions = etSearch.text.toString()
             if(checkConditions(questions)){
                 // Gerekli işlemler yapılacak
 
@@ -32,7 +36,7 @@ class ChatFragment : Fragment() {
             }
         }
 
-        return binding.root
+        return view
     }
 
     private fun checkConditions(questions: String): Boolean {
@@ -49,6 +53,5 @@ class ChatFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
     }
 }
