@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.Fake_gpt" parent="Base.Theme.Fake_gpt" />
+
+    <style name="ShapeAppearanceOverlay.CardView" parent="">
+        <item name="cornerSizeBottomLeft">20%</item>
+        <item name="cornerSizeBottomRight">20%</item>
+        <item name="cornerSizeTopLeft">0%</item>
+        <item name="cornerSizeTopRight">20%</item>
+    </style>
 </resources>
