@@ -10,10 +10,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.week2.getir.fake_gpt.view.ChatAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 
 class ChatFragment : Fragment() {
 
-
+    private lateinit var button: ImageView
+    private lateinit var etSearch: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,8 +27,26 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        val view = inflater.inflate(R.layout.fragment_chat,container,false)
+        button = view.findViewById(R.id.btnSearch)
+        etSearch = view.findViewById(R.id.etSearch)
+        button.setOnClickListener {
+            val questions = etSearch.text.toString()
+            if(checkConditions(questions)){
+                // Gerekli işlemler yapılacak
+
+
+            }
+        }
+
+        return view
+    }
+
+    private fun checkConditions(questions: String): Boolean {
+        if(questions.toString().isNullOrEmpty()){
+            return false
+        }
+        return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,5 +69,9 @@ class ChatFragment : Fragment() {
     companion object {
         fun createSimpleIntent(context: Context): Intent =
             Intent(context, ChatFragment::class.java)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
