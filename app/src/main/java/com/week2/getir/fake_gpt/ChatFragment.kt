@@ -23,8 +23,8 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentChatBinding.inflate(layoutInflater,container,false)
-        binding.buttonEnter.setOnClickListener {
-            val questions = binding.editTextSearch.text.toString()
+        binding.btnSearch.setOnClickListener {
+            val questions = binding.etSearch.text.toString()
             if(checkConditions(questions)){
                 // Gerekli işlemler yapılacak
 
