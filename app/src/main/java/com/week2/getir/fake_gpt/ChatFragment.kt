@@ -9,10 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 
 class ChatFragment : Fragment() {
 
-    private lateinit var button: Button
+    private lateinit var button: ImageView
     private lateinit var etSearch: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
