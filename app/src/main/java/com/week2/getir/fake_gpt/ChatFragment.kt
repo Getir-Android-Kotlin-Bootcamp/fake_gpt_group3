@@ -7,20 +7,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.week2.getir.fake_gpt.view.ChatAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.lifecycle.lifecycleScope
+import com.airbnb.lottie.LottieAnimationView
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.BlockThreshold
+import com.google.ai.client.generativeai.type.HarmCategory
+import com.google.ai.client.generativeai.type.SafetySetting
+import com.google.android.material.card.MaterialCardView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ChatFragment : Fragment() {
 
     private lateinit var button: ImageView
     private lateinit var etSearch: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -28,17 +39,9 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chat,container,false)
+
         button = view.findViewById(R.id.btnSearch)
         etSearch = view.findViewById(R.id.etSearch)
-        button.setOnClickListener {
-            val questions = etSearch.text.toString()
-            if(checkConditions(questions)){
-                // Gerekli işlemler yapılacak
-
-
-            }
-        }
-
         return view
     }
 
@@ -55,15 +58,46 @@ class ChatFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.rvChats)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val messages = listOf(
-            Message("Merhaba ben FakeGPT , nasıl yardımcı olabilirim?", false),
-            Message("Siparişimde bir sorun var!", true),
-            Message("Hemen kontrolleri sağlıyorum.", false),
-            Message("Bekliyorum!!!!!.", true)
+        val generativeModel = GenerativeModel(
+            modelName = "gemini-pro",
+            apiKey = "AIzaSyDZ_AazukuPE80_zFKfPhY6PzGGxuFG0wc",
+            safetySettings = safetySettingList
         )
+
+        val messages = mutableListOf(
+            Message("Merhaba ben FakeGPT , nasıl yardımcı olabilirim?", false),
+        )
+
         val adapter = ChatAdapter(messages)
         recyclerView.adapter = adapter
 
+        button.setOnClickListener {
+            val questions = etSearch.text.toString()
+            if(checkConditions(questions)){
+                // Gerekli işlemler yapılacak
+                val questionMessage = Message(questions, true)
+                addMessageToDataSet(messages, questionMessage, adapter)
+
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try {
+                        val response = generativeModel.generateContent(questions)
+                        val geminiResponse = Message(response.text!!, false)
+
+                        withContext(Dispatchers.Main) {
+                            addMessageToDataSet(messages, geminiResponse, adapter)
+                        }
+                    } catch (e: Exception) {
+                        // Network error etc
+                        //println("${e.message}")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addMessageToDataSet(messageList: MutableList<Message>, message: Message, chatAdapter: ChatAdapter){
+        messageList.add(message)
+        chatAdapter.notifyDataSetChanged()
     }
 
     companion object {
