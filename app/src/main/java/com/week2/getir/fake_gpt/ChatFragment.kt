@@ -29,6 +29,7 @@ class ChatFragment : Fragment() {
 
     private lateinit var button: ImageView
     private lateinit var etSearch: EditText
+    private var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +78,8 @@ class ChatFragment : Fragment() {
                 // Gerekli işlemler yapılacak
                 val questionMessage = Message(questions, true)
                 addMessageToDataSet(messages, questionMessage, adapter)
-
+                isLoading = true
+                updateAdapter(adapter)
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
                         val response = generativeModel.generateContent(questions)
@@ -85,6 +87,8 @@ class ChatFragment : Fragment() {
 
                         withContext(Dispatchers.Main) {
                             addMessageToDataSet(messages, geminiResponse, adapter)
+                            isLoading = false
+                            updateAdapter(adapter)
                         }
                     } catch (e: Exception) {
                         // Network error etc
@@ -98,6 +102,9 @@ class ChatFragment : Fragment() {
     private fun addMessageToDataSet(messageList: MutableList<Message>, message: Message, chatAdapter: ChatAdapter){
         messageList.add(message)
         chatAdapter.notifyDataSetChanged()
+    }
+    private fun updateAdapter(chatAdapter: ChatAdapter) {
+        chatAdapter.setLoading(isLoading)
     }
 
     companion object {
