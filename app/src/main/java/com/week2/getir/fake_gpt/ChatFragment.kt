@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Adapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +44,7 @@ class ChatFragment : Fragment() {
 
         button = view.findViewById(R.id.btnSearch)
         etSearch = view.findViewById(R.id.etSearch)
+
         return view
     }
 
@@ -75,11 +77,15 @@ class ChatFragment : Fragment() {
         button.setOnClickListener {
             val questions = etSearch.text.toString()
             if(checkConditions(questions)){
+                etSearch.text.clear()
+                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(button.windowToken, 0)
                 // Gerekli işlemler yapılacak
                 val questionMessage = Message(questions, true)
                 addMessageToDataSet(messages, questionMessage, adapter)
                 isLoading = true
                 updateAdapter(adapter)
+                recyclerView.smoothScrollToPosition(messages.size - 1)
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
                         val response = generativeModel.generateContent(questions)
@@ -89,6 +95,7 @@ class ChatFragment : Fragment() {
                             addMessageToDataSet(messages, geminiResponse, adapter)
                             isLoading = false
                             updateAdapter(adapter)
+                            recyclerView.smoothScrollToPosition(messages.size - 1)
                         }
                     } catch (e: Exception) {
                         // Network error etc

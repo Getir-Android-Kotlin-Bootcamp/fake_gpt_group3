@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChatFragment">
@@ -120,11 +121,9 @@
 
             <EditText
                 android:id="@+id/etSearch"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="31dp"
-
                 android:background="#00000000"
-
                 android:fontFamily="@font/poppins_semibold"
                 android:gravity="center_vertical"
                 android:hint="@string/foods_runs_typing"
@@ -132,7 +131,7 @@
                 android:textColor="@color/semi_transparent_black"
                 android:textColorHint="@color/semi_transparent_black"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnSearch"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -140,8 +139,6 @@
                 android:id="@+id/btnSearch"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-
-
                 android:src="@drawable/search_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
