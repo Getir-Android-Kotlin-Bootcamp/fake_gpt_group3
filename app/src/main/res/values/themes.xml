@@ -8,9 +8,9 @@
     <style name="Theme.Fake_gpt" parent="Base.Theme.Fake_gpt" />
 
     <style name="ShapeAppearanceOverlay.CardView" parent="">
-        <item name="cornerSizeBottomLeft">20%</item>
-        <item name="cornerSizeBottomRight">20%</item>
+        <item name="cornerSizeBottomLeft">40%</item>
+        <item name="cornerSizeBottomRight">40%</item>
         <item name="cornerSizeTopLeft">0%</item>
-        <item name="cornerSizeTopRight">20%</item>
+        <item name="cornerSizeTopRight">40%</item>
     </style>
 </resources>

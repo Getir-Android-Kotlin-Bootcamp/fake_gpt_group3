@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     app:cardElevation="0dp"
     app:strokeWidth="0dp"
-    app:cardBackgroundColor="#E8E8F2"
+    app:cardBackgroundColor="#EFEFFA"
     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.CardView"
     android:layout_height="wrap_content">
 
