@@ -15,9 +15,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildFeatures {
+            buildConfig =true
+        }
     }
 
     buildTypes {
+        debug{
+
+            buildConfigField( "String", "GEMINI_KEY", "\"AIzaSyDZ_AazukuPE80_zFKfPhY6PzGGxuFG0wc\"")
+
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
