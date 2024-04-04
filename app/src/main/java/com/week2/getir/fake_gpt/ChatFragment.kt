@@ -61,7 +61,9 @@ class ChatFragment : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.rvChats)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
+        val manager = LinearLayoutManager(requireContext())
+        manager.stackFromEnd = true
+        recyclerView.layoutManager = manager
         val generativeModel = GenerativeModel(
             modelName = "gemini-pro",
             apiKey = "AIzaSyDZ_AazukuPE80_zFKfPhY6PzGGxuFG0wc",
