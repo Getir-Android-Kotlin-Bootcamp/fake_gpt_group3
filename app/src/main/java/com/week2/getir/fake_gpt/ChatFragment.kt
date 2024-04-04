@@ -2,6 +2,7 @@ package com.week2.getir.fake_gpt
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -78,24 +79,20 @@ class ChatFragment : Fragment() {
             val questions = etSearch.text.toString()
             if(checkConditions(questions)){
                 etSearch.text.clear()
-                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(button.windowToken, 0)
                 // Gerekli işlemler yapılacak
                 val questionMessage = Message(questions, true)
-                addMessageToDataSet(messages, questionMessage, adapter)
+                addMessageToDataSet(messages, questionMessage, adapter, recyclerView)
                 isLoading = true
-                updateAdapter(adapter)
-                recyclerView.smoothScrollToPosition(messages.size - 1)
+                updateAdapter(adapter, recyclerView)
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
                         val response = generativeModel.generateContent(questions)
                         val geminiResponse = Message(response.text!!, false)
 
                         withContext(Dispatchers.Main) {
-                            addMessageToDataSet(messages, geminiResponse, adapter)
+                            addMessageToDataSet(messages, geminiResponse, adapter, recyclerView)
                             isLoading = false
-                            updateAdapter(adapter)
-                            recyclerView.smoothScrollToPosition(messages.size - 1)
+                            updateAdapter(adapter, recyclerView)
                         }
                     } catch (e: Exception) {
                         // Network error etc
@@ -106,11 +103,17 @@ class ChatFragment : Fragment() {
         }
     }
 
-    private fun addMessageToDataSet(messageList: MutableList<Message>, message: Message, chatAdapter: ChatAdapter){
+    private fun addMessageToDataSet(
+        messageList: MutableList<Message>,
+        message: Message, chatAdapter: ChatAdapter,
+        recyclerView: RecyclerView
+    ){
         messageList.add(message)
+        recyclerView.scrollToPosition(chatAdapter.itemCount)
         chatAdapter.notifyDataSetChanged()
     }
-    private fun updateAdapter(chatAdapter: ChatAdapter) {
+    private fun updateAdapter(chatAdapter: ChatAdapter, recyclerView: RecyclerView) {
+        if (isLoading) recyclerView.scrollToPosition(chatAdapter.itemCount)
         chatAdapter.setLoading(isLoading)
     }
 
