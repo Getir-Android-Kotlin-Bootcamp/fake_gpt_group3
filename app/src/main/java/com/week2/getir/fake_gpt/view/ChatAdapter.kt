@@ -83,8 +83,6 @@ class ChatAdapter(private val messages: List<Message>, private var isLoading: Bo
 
 
     inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind() {
-            // Burada gerekirse yükleme görseli veya animasyonu gösterebilirsiniz.
-        }
+        fun bind() {}
     }
 }

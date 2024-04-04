@@ -2,27 +2,19 @@ package com.week2.getir.fake_gpt
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.Adapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.week2.getir.fake_gpt.view.ChatAdapter
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.airbnb.lottie.LottieAnimationView
 import com.google.ai.client.generativeai.GenerativeModel
-import com.google.ai.client.generativeai.type.BlockThreshold
-import com.google.ai.client.generativeai.type.HarmCategory
-import com.google.ai.client.generativeai.type.SafetySetting
-import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -49,13 +41,6 @@ class ChatFragment : Fragment() {
         return view
     }
 
-    private fun checkConditions(questions: String): Boolean {
-        if(questions.toString().isNullOrEmpty()){
-            return false
-        }
-        return true
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -64,14 +49,15 @@ class ChatFragment : Fragment() {
         val manager = LinearLayoutManager(requireContext())
         manager.stackFromEnd = true
         recyclerView.layoutManager = manager
+
         val generativeModel = GenerativeModel(
-            modelName = "gemini-pro",
-            apiKey = "AIzaSyDZ_AazukuPE80_zFKfPhY6PzGGxuFG0wc",
+            modelName = getString(R.string.model_name),
+            apiKey =BuildConfig.GEMINI_KEY,
             safetySettings = safetySettingList
         )
 
         val messages = mutableListOf(
-            Message("Merhaba ben FakeGPT , nasıl yardımcı olabilirim?", false),
+            Message(getString(R.string.initial_message), false),
         )
 
         val adapter = ChatAdapter(messages)
@@ -81,7 +67,6 @@ class ChatFragment : Fragment() {
             val questions = etSearch.text.toString()
             if(checkConditions(questions)){
                 etSearch.text.clear()
-                // Gerekli işlemler yapılacak
                 val questionMessage = Message(questions, true)
                 addMessageToDataSet(messages, questionMessage, adapter, recyclerView)
                 isLoading = true
@@ -97,8 +82,7 @@ class ChatFragment : Fragment() {
                             updateAdapter(adapter, recyclerView)
                         }
                     } catch (e: Exception) {
-                        // Network error etc
-                        //println("${e.message}")
+                        Toast.makeText(context , e.localizedMessage, Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -118,13 +102,15 @@ class ChatFragment : Fragment() {
         if (isLoading) recyclerView.scrollToPosition(chatAdapter.itemCount)
         chatAdapter.setLoading(isLoading)
     }
+    private fun checkConditions(questions: String): Boolean {
+        if(questions.isNullOrEmpty()){
+            return false
+        }
+        return true
+    }
 
     companion object {
         fun createSimpleIntent(context: Context): Intent =
             Intent(context, ChatFragment::class.java)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }
