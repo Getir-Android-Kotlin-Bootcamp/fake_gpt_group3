@@ -136,11 +136,14 @@
 
             <ImageView
                 android:id="@+id/btnSearch"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/shape_bg_ripple"
                 android:src="@drawable/search_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -148,6 +151,9 @@
             android:id="@+id/buttonGetImage"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/shape_bg_ripple"
             android:src="@drawable/chain_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
