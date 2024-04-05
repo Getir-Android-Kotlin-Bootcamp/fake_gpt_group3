@@ -1,4 +1,4 @@
-package com.week2.getir.fake_gpt
+package com.week2.getir.fake_gpt.core
 
 import com.google.ai.client.generativeai.type.BlockThreshold
 import com.google.ai.client.generativeai.type.HarmCategory

@@ -1,11 +1,11 @@
-package com.week2.getir.fake_gpt.view
+package com.week2.getir.fake_gpt.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.week2.getir.fake_gpt.Message
+import com.week2.getir.fake_gpt.model.Message
 import com.week2.getir.fake_gpt.R
 
 class ChatAdapter(private val messages: List<Message>, private var isLoading: Boolean = false) :

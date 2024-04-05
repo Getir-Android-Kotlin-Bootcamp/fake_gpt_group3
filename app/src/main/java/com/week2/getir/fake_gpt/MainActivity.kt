@@ -2,6 +2,7 @@ package com.week2.getir.fake_gpt
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.week2.getir.fake_gpt.view.ChatFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

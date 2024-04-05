@@ -1,4 +1,4 @@
-package com.week2.getir.fake_gpt
+package com.week2.getir.fake_gpt.view
 
 import android.content.Context
 import android.content.Intent
@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.week2.getir.fake_gpt.view.ChatAdapter
+import com.week2.getir.fake_gpt.adapter.ChatAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.ai.client.generativeai.GenerativeModel
+import com.week2.getir.fake_gpt.BuildConfig
+import com.week2.getir.fake_gpt.R
+import com.week2.getir.fake_gpt.core.safetySettingList
+import com.week2.getir.fake_gpt.model.Message
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -52,7 +56,7 @@ class ChatFragment : Fragment() {
 
         val generativeModel = GenerativeModel(
             modelName = getString(R.string.model_name),
-            apiKey =BuildConfig.GEMINI_KEY,
+            apiKey = BuildConfig.GEMINI_KEY,
             safetySettings = safetySettingList
         )
 
