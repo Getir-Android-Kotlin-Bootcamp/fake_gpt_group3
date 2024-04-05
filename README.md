@@ -57,10 +57,28 @@
 <h1>Other Files</h1>
 <p><strong>safetySettingList:</strong> A list containing safety settings.</p>
 
+<h1>Project Folder Structure</h1>
+
+  <h2>Overview:</h2>
+  <p>Our project follows a structured folder organization to keep the codebase tidy and manageable. The main folders are:</p>
+  <ul>
+    <li><strong>core:</strong> Contains utility class.</li>
+    <li><strong>adapter:</strong> Includes the RecyclerView adapter and its associated ViewHolder classes.</li>
+    <li><strong>view:</strong> Holds Fragments</li>
+     <li><strong>model:</strong> Holds Message model class</li>
+
+  </ul>
+
+
+
 </body>
 </html>
 
 <h1>Demo Video</h1>
 
-https://github.com/erenkaraboga/fake_gpt/assets/74095539/27cb58b5-a858-41f2-9f96-9cc85097a4c2
+
+
+
+https://github.com/erenkaraboga/fake_gpt/assets/74095539/e8451ef1-e0d9-4ff9-80f1-f74df12a54d1
+
 
