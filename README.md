@@ -81,4 +81,8 @@
 
 https://github.com/erenkaraboga/fake_gpt/assets/74095539/e8451ef1-e0d9-4ff9-80f1-f74df12a54d1
 
+<h1> Working Android Studio Versions</h1>
+Android Studio Iguana | 2023.2.1 Patch 1 -
+Android Studio Iguana | 2023.2.1 -
+Android Studio Hedgehog | 2023.1.1
 
